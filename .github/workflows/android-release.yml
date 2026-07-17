@@ -73,6 +73,12 @@ jobs:
         run: |
           "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
 
+      - name: Delete existing release (if any)
+        shell: bash
+        run: gh release delete ${{ github.ref_name }} --yes --cleanup-tag || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload Windows Release
         uses: softprops/action-gh-release@v2
         with:
