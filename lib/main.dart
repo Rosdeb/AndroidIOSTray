@@ -16,9 +16,9 @@ Future<void> main() async {
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
     const windowOptions = WindowOptions(
-      size: Size(900, 550),
-      minimumSize: Size(900, 550),
-      maximumSize: Size(900, 550),
+      size: Size(1100, 600),
+      minimumSize: Size(1100, 600),
+      maximumSize: Size(1100, 600),
       center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
