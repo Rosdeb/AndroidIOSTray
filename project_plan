@@ -1,0 +1,947 @@
+# Android Emulator Manager (AEM)
+
+## Project Overview
+
+Build a production-quality Flutter Windows desktop application named **Android Emulator Manager (AEM)**.
+
+The application should help Android developers manage Android Studio emulators quickly without opening Android Studio.
+
+The application should live in the Windows System Tray, automatically detect installed Android SDKs and AVDs, launch emulators, monitor running status, pin favorite devices, and provide a modern Material 3 interface.
+
+This project must follow Clean Architecture, SOLID principles, and production-quality Flutter code.
+
+The final result should be suitable for open-source release and commercial use.
+
+---
+
+# Technology
+
+Framework
+
+* Flutter Stable (Latest)
+
+Platform
+
+* Windows Desktop
+
+Language
+
+* Dart
+
+Architecture
+
+* Clean Architecture
+* MVVM
+* Repository Pattern
+* Service Layer
+* Dependency Injection
+
+State Management
+
+Riverpod (preferred)
+
+Alternative
+
+Provider (only if necessary)
+
+Local Storage
+
+SharedPreferences
+
+Windows APIs
+
+win32
+
+System Tray
+
+tray_manager
+
+Window Management
+
+window_manager
+
+Process Management
+
+dart:io Process
+
+JSON
+
+json_serializable
+
+Logging
+
+logger
+
+Path Utilities
+
+path
+path_provider
+
+---
+
+# Application Goals
+
+The application should
+
+* Detect Android SDK automatically
+* Detect installed emulators
+* Launch emulators
+* Stop emulators
+* Detect emulator status
+* Show emulator information
+* Manage favorite emulators
+* Run in System Tray
+* Start with Windows
+* Support Dark Mode
+* Support Light Mode
+* Automatically refresh emulator list
+* Show notifications
+* Provide modern desktop experience
+
+---
+
+# Functional Requirements
+
+## Detect Android SDK
+
+Automatically detect SDK from
+
+ANDROID_HOME
+
+ANDROID_SDK_ROOT
+
+Default locations
+
+Windows
+
+C:\Users<User>\AppData\Local\Android\Sdk
+
+If multiple SDKs exist
+
+Allow user selection
+
+If SDK not found
+
+Open folder picker
+
+Save selected path
+
+---
+
+## Detect Emulator Executable
+
+Locate
+
+emulator.exe
+
+Example
+
+AndroidSdk/emulator/emulator.exe
+
+Validate existence
+
+If missing
+
+Display error
+
+---
+
+## Detect Installed AVDs
+
+Execute
+
+emulator.exe -list-avds
+
+Parse output
+
+Return
+
+List<Emulator>
+
+Each emulator should contain
+
+Name
+
+API
+
+Android Version
+
+Architecture
+
+Path
+
+Favorite
+
+Running
+
+Booting
+
+Last Used
+
+Created Date
+
+---
+
+## Emulator Information
+
+Display
+
+Device Name
+
+Android Version
+
+API Level
+
+Architecture
+
+Resolution
+
+RAM
+
+Internal Storage
+
+Snapshot Enabled
+
+Created Date
+
+Last Used
+
+---
+
+## Emulator Card
+
+Each emulator card should include
+
+Device Icon
+
+Name
+
+API Level
+
+Android Version
+
+Running Status
+
+Favorite Button
+
+Run Button
+
+Cold Boot Button
+
+Stop Button
+
+More Menu
+
+Hover Effects
+
+Context Menu
+
+---
+
+## Launch Emulator
+
+Run
+
+emulator.exe -avd Pixel_5
+
+Support options
+
+Cold Boot
+
+No Snapshot
+
+Writable System
+
+GPU
+
+Read Only
+
+Custom Memory
+
+Custom DPI
+
+Landscape
+
+Portrait
+
+---
+
+## Detect Running Emulator
+
+Execute
+
+adb devices
+
+or
+
+adb emu avd name
+
+Display
+
+Offline
+
+Booting
+
+Running
+
+Disconnected
+
+---
+
+## Stop Emulator
+
+Graceful shutdown
+
+adb emu kill
+
+Fallback
+
+taskkill
+
+---
+
+## Search
+
+Search by
+
+Name
+
+Android Version
+
+API
+
+Architecture
+
+---
+
+## Sorting
+
+Sort by
+
+Favorites
+
+Running
+
+Recently Used
+
+Alphabetical
+
+API
+
+Android Version
+
+---
+
+## Filtering
+
+Running
+
+Offline
+
+Favorite
+
+Tablet
+
+Phone
+
+Foldable
+
+Wear
+
+TV
+
+Automotive
+
+---
+
+## Favorites
+
+Users can
+
+Pin emulator
+
+Unpin emulator
+
+Favorites appear first
+
+Store locally
+
+---
+
+## Recent
+
+Store last launched
+
+Display
+
+Recently Used
+
+---
+
+## Notifications
+
+Windows Notification
+
+Examples
+
+Pixel 5 Started
+
+Pixel 5 Closed
+
+Cold Boot Complete
+
+---
+
+## Auto Refresh
+
+Refresh
+
+Every 5 seconds
+
+Detect
+
+New emulator
+
+Deleted emulator
+
+Status change
+
+---
+
+## System Tray
+
+Tray Icon
+
+Menu
+
+Run Emulator
+
+Stop Emulator
+
+Refresh
+
+Open Manager
+
+Settings
+
+Exit
+
+Left Click
+
+Restore window
+
+Double Click
+
+Restore window
+
+Right Click
+
+Open Menu
+
+---
+
+## Start With Windows
+
+Enable
+
+Disable
+
+Registry based
+
+---
+
+## Window Behavior
+
+Close button
+
+Minimize to tray
+
+Never exit
+
+Unless
+
+Exit selected
+
+---
+
+## Dark Mode
+
+Material 3
+
+System Theme
+
+Manual Theme
+
+---
+
+## Light Theme
+
+Material 3
+
+---
+
+# Settings Page
+
+SDK Location
+
+ADB Location
+
+Theme
+
+Startup
+
+Refresh Interval
+
+Notifications
+
+Launch Options
+
+Window Behavior
+
+Logs
+
+About
+
+---
+
+# Logs
+
+Maintain logs
+
+Launch
+
+Errors
+
+ADB
+
+Emulator
+
+SDK Detection
+
+System Tray
+
+Export logs
+
+---
+
+# Emulator Details Window
+
+Show
+
+Screenshot
+
+Resolution
+
+RAM
+
+Storage
+
+CPU
+
+Architecture
+
+API
+
+Android Version
+
+Snapshot
+
+Disk Usage
+
+Buttons
+
+Launch
+
+Cold Boot
+
+Stop
+
+Open Folder
+
+Delete
+
+---
+
+# Dashboard
+
+Statistics
+
+Installed Emulators
+
+Running
+
+Favorites
+
+SDK Version
+
+ADB Version
+
+Android Studio Version
+
+Disk Usage
+
+RAM Usage
+
+CPU Usage
+
+---
+
+# Android Studio Integration
+
+Detect installation
+
+Launch Android Studio
+
+Open SDK Manager
+
+Open AVD Manager
+
+---
+
+# Flutter Integration
+
+Open Project
+
+Run Flutter
+
+Flutter Clean
+
+Pub Get
+
+Build APK
+
+Build AppBundle
+
+Run Tests
+
+Terminal
+
+---
+
+# Command Templates
+
+Launch
+
+emulator.exe -avd Pixel_5
+
+Cold Boot
+
+emulator.exe -avd Pixel_5 -no-snapshot-load
+
+Writable
+
+emulator.exe -avd Pixel_5 -writable-system
+
+ADB
+
+adb devices
+
+Kill
+
+adb emu kill
+
+List
+
+emulator.exe -list-avds
+
+---
+
+# UI Design
+
+Material 3
+
+Rounded Corners
+
+Glassmorphism (optional)
+
+Animations
+
+Responsive
+
+Desktop Optimized
+
+Sidebar Navigation
+
+Cards
+
+Modern Search
+
+Status Chips
+
+Progress Indicators
+
+Skeleton Loading
+
+Context Menus
+
+---
+
+# Folder Structure
+
+lib/
+
+core/
+
+constants/
+
+theme/
+
+extensions/
+
+utils/
+
+services/
+
+repositories/
+
+models/
+
+providers/
+
+screens/
+
+dashboard/
+
+settings/
+
+details/
+
+widgets/
+
+dialogs/
+
+tray/
+
+routes/
+
+main.dart
+
+assets/
+
+icons/
+
+images/
+
+fonts/
+
+windows/
+
+---
+
+# Services
+
+SDK Detection Service
+
+ADB Service
+
+Emulator Service
+
+Tray Service
+
+Notification Service
+
+Settings Service
+
+Logger Service
+
+Theme Service
+
+Startup Service
+
+Flutter Service
+
+Android Studio Service
+
+---
+
+# Models
+
+Emulator
+
+SDK
+
+ADB
+
+Settings
+
+Theme
+
+Statistics
+
+Logs
+
+---
+
+# Riverpod Providers
+
+ThemeProvider
+
+SDKProvider
+
+ADBProvider
+
+SettingsProvider
+
+EmulatorProvider
+
+RunningProvider
+
+TrayProvider
+
+---
+
+# Error Handling
+
+Missing SDK
+
+Missing Emulator
+
+ADB Not Found
+
+Permission Denied
+
+Launch Failed
+
+Emulator Busy
+
+Android Studio Missing
+
+---
+
+# Performance
+
+Use isolates if required
+
+Lazy loading
+
+Efficient polling
+
+Dispose resources
+
+Avoid memory leaks
+
+---
+
+# Testing
+
+Unit Tests
+
+Widget Tests
+
+Integration Tests
+
+Repository Tests
+
+---
+
+# Documentation
+
+README
+
+Installation Guide
+
+Architecture Diagram
+
+Developer Guide
+
+Contribution Guide
+
+API Documentation
+
+Code Comments
+
+Changelog
+
+License
+
+---
+
+# Packaging
+
+Generate Release EXE
+
+Create Installer
+
+Desktop Shortcut
+
+Start Menu Shortcut
+
+Auto Update Ready
+
+---
+
+# Future Roadmap
+
+Cloud Sync
+
+Firebase Analytics
+
+GitHub Releases Update Checker
+
+ADB Shell Console
+
+Screenshot Capture
+
+Screen Recording
+
+Logcat Viewer
+
+APK Installer
+
+APK Drag-and-Drop
+
+Multiple SDK Support
+
+Linux Support
+
+macOS Support
+
+Plugin System
+
+VS Code Extension
+
+JetBrains Plugin
+
+---
+
+# Coding Standards
+
+Use Dart Lints
+
+Follow Effective Dart
+
+No duplicated code
+
+Strong typing
+
+SOLID
+
+Reusable widgets
+
+Document public APIs
+
+Meaningful variable names
+
+Meaningful commit messages
+
+---
+
+# Deliverables
+
+The generated project must include:
+
+1. Complete Flutter Windows project.
+2. Fully functional source code.
+3. Material 3 responsive UI.
+4. Clean Architecture implementation.
+5. Riverpod state management.
+6. System tray integration.
+7. Android SDK and AVD detection.
+8. Emulator launch, monitoring, and termination.
+9. Settings persistence.
+10. Logging and notifications.
+11. Unit and widget tests.
+12. Comprehensive README with setup instructions.
+13. Release-ready Windows build configuration.
+
+The code should be production-ready, modular, well-documented, and easy to extend with future features.
