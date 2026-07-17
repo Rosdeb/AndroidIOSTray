@@ -243,15 +243,6 @@ class _VersionUpdateTileState extends ConsumerState<VersionUpdateTile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            "v$_currentVersion",
-            style: TextStyle(
-              fontSize: 11,
-              color: colorScheme.onSurfaceVariant.withOpacity(.6),
-            ),
-          ),
-          const SizedBox(height: 6),
-
           updateAsync.when(
             data: (update) {
               if (update == null) return const SizedBox.shrink();
