@@ -3,7 +3,7 @@ name: Windows Release
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
   workflow_dispatch:
 
 permissions:
@@ -20,43 +20,34 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.44.4"
+          flutter-version: '3.44.4'
 
-      - name: Get Dependencies
+      - name: Flutter Pub Get
         run: flutter pub get
 
       - name: Enable Windows Desktop
         run: flutter config --enable-windows-desktop
 
-      - name: Build Windows Release
+      - name: Build Windows
         run: flutter build windows --release
 
-      - name: List Release Files
-        shell: powershell
+      - name: Show Release Folder
+        shell: pwsh
         run: |
           Get-ChildItem build/windows/x64/runner/Release -Recurse
 
-      - name: Find EXE
-        id: find_exe
-        shell: powershell
-        run: |
-          $exe = Get-ChildItem "build/windows/x64/runner/Release" -Filter *.exe -Recurse | Select-Object -First 1
-
-          if ($null -eq $exe) {
-            Write-Error "No EXE file found!"
-            exit 1
-          }
-
-          Write-Host "Found EXE: $($exe.FullName)"
-          "exe_path=$($exe.FullName)" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-release
+          path: build/windows/x64/runner/Release
 
       - name: Upload EXE to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ steps.find_exe.outputs.exe_path }}
+          files: build/windows/x64/runner/Release/*.exe
 
           
-
   ##################################
   ## macOS
   ##################################
