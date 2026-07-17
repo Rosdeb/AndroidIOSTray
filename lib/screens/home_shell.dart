@@ -241,7 +241,7 @@ class _VersionUpdateTileState extends ConsumerState<VersionUpdateTile> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             "v$_currentVersion",
