@@ -12,33 +12,52 @@ permissions:
 jobs:
 
   ##################################
-  ## Windows
-  ##################################
+## Windows
+##################################
 
-  windows:
-    runs-on: windows-latest
+windows:
+  runs-on: windows-latest
 
-    steps:
-      - uses: actions/checkout@v4
+  steps:
+    - uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.44.4"
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: "3.44.4"
 
-      - run: flutter pub get
+    - name: Get dependencies
+      run: flutter pub get
 
-      - run: flutter config --enable-windows-desktop
+    - name: Enable Windows Desktop
+      run: flutter config --enable-windows-desktop
 
-      - run: flutter build windows --release
+    - name: Build Windows
+      run: flutter build windows --release
 
-      - name: List Release Files
-        shell: powershell
-        run: |
-          Get-ChildItem build/windows/x64/runner/Release
+    - name: List Release Folder
+      shell: powershell
+      run: |
+        Write-Host "===== Release Folder ====="
+        Get-ChildItem build/windows/x64/runner/Release -Recurse
 
-      - uses: softprops/action-gh-release@v2
-        with:
-          files: build/windows/x64/runner/Release/MyApp.exe  
+    - name: Find EXE
+      id: find_exe
+      shell: powershell
+      run: |
+        $exe = Get-ChildItem build/windows/x64/runner/Release -Filter *.exe -Recurse | Select-Object -First 1
+
+        if ($null -eq $exe) {
+          Write-Error "No EXE file found!"
+          exit 1
+        }
+
+        Write-Host "Found EXE: $($exe.FullName)"
+        echo "exe_path=$($exe.FullName)" >> $env:GITHUB_OUTPUT
+
+    - name: Upload EXE to Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: ${{ steps.find_exe.outputs.exe_path }}
           
             
 
@@ -74,14 +93,14 @@ jobs:
           cp -R build/macos/Build/Products/Release/*.app dmg/
 
           create-dmg \
-            --volname "MyApp" \
+            --volname "Tray" \
             --window-pos 200 120 \
             --window-size 800 500 \
             --icon-size 100 \
             --app-drop-link 600 185 \
-            MyApp.dmg \
+            Tray.dmg \
             dmg/
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: MyApp.dmg
+          files: Tray.dmg
