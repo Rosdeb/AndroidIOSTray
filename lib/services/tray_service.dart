@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -9,17 +11,27 @@ class AppTrayService with TrayListener, WindowListener {
     required Future<void> Function() onRefresh,
     required Future<void> Function() onExit,
   }) async {
-    if (!Platform.isWindows) {
-      return;
-    }
+    if (!Platform.isWindows) return;
+
+    print("Initializing tray...");
+
     windowManager.addListener(this);
     trayManager.addListener(this);
+
     try {
-      await trayManager.setIcon('windows/runner/resources/app_icon.ico');
-      await trayManager.setToolTip('Android Emulator Manager');
+      final file = File("windows/runner/resources/app_icon.ico");
+      print("Exists: ${file.existsSync()}");
+      print("Path: ${file.absolute.path}");
+
+      await trayManager.setIcon(file.path);
+      print("Icon loaded");
+
+      await trayManager.setToolTip("Android Emulator Manager");
+      print("Tooltip set");
+
       await trayManager.setContextMenu(
         Menu(
-          items: <MenuItem>[
+          items: [
             MenuItem(key: 'open', label: 'Open Manager'),
             MenuItem(key: 'refresh', label: 'Refresh'),
             MenuItem.separator(),
@@ -27,9 +39,13 @@ class AppTrayService with TrayListener, WindowListener {
           ],
         ),
       );
-    } on PlatformException {
-      return;
+
+      print("Menu created");
+    } catch (e, st) {
+      print("Tray error: $e");
+      debugPrintStack(stackTrace: st);
     }
+
     _onRefresh = onRefresh;
     _onExit = onExit;
   }
