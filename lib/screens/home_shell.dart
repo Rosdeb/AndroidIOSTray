@@ -241,13 +241,14 @@ class _VersionUpdateTileState extends ConsumerState<VersionUpdateTile> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "v$_currentVersion",
+            "V$_currentVersion",
             style: TextStyle(
               fontSize: 11,
-              color: colorScheme.onSurfaceVariant.withOpacity(.6),
+              fontWeight: FontWeight.w500,
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.9),
             ),
           ),
           const SizedBox(height: 6),
