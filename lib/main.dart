@@ -16,9 +16,9 @@ Future<void> main() async {
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
     const windowOptions = WindowOptions(
-      size: Size(1200, 650),
-      minimumSize: Size(1200, 650),
-      maximumSize: Size(1200, 650),
+      size: Size(988, 545),
+      minimumSize: Size(988, 545),
+      maximumSize: Size(988, 545),
       center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
@@ -27,7 +27,6 @@ Future<void> main() async {
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.setResizable(false);
       await windowManager.setMaximizable(false);
-      // এই লাইনটি নেটিভ উইন্ডোজ টাইটেল বারের সাদা ব্যাকগ্রাউন্ড মাস্ক সরিয়ে দেয়
       await windowManager.setHasShadow(true);
       await windowManager.show();
       await windowManager.focus();
