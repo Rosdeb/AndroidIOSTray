@@ -54,15 +54,31 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 28),
                 sliver: SliverGrid.count(
-                  crossAxisCount: MediaQuery.sizeOf(context).width > 1100 ? 4 : 2,
+                  crossAxisCount: 4,
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
                   childAspectRatio: 2.8,
                   children: <Widget>[
-                    StatTile(label: 'Installed', value: data.statistics.installed.toString(), icon: Icons.devices),
-                    StatTile(label: 'Running', value: data.statistics.running.toString(), icon: Icons.play_circle),
-                    StatTile(label: 'Favorites', value: data.statistics.favorites.toString(), icon: Icons.star),
-                    StatTile(label: 'Booting', value: data.statistics.booting.toString(), icon: Icons.sync),
+                    StatTile(
+                      label: 'Installed',
+                      value: data.statistics.installed.toString(),
+                      icon: Icons.devices,
+                    ),
+                    StatTile(
+                      label: 'Running',
+                      value: data.statistics.running.toString(),
+                      icon: Icons.play_circle,
+                    ),
+                    StatTile(
+                      label: 'Favorites',
+                      value: data.statistics.favorites.toString(),
+                      icon: Icons.star,
+                    ),
+                    StatTile(
+                      label: 'Booting',
+                      value: data.statistics.booting.toString(),
+                      icon: Icons.sync,
+                    ),
                   ],
                 ),
               ),
