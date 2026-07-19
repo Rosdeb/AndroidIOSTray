@@ -168,7 +168,7 @@ class AppSidebar extends ConsumerWidget {
           Row(
             children: [
               const SizedBox(width: 12),
-              Image.asset("assets/icons/tray.png",height: 40,width: 50,),
+              Image.asset("assets/icons/tray.png",height: 40,width: 50,color: colorScheme.onSurfaceVariant.withValues(alpha: 4),),
               const SizedBox(width: 12),
               Text(
                 "Tray",
